@@ -22,6 +22,42 @@
   font-size: large;
 }
 
+.nav {
+  background: white;
+}
+
+.nav-inner {
+  width: 87%;
+  margin: 0 auto;
+  padding: 10px 0;
+}
+
+.wrapper {
+  background-color: #F5F5F5;
+  height: 100vh;
+}
+
+.container {
+  height: 100%;
+  width: 87%;
+  margin: 0 auto;
+  display: flex;
+}
+
+.search, .car-list {
+  height: 100%;
+}
+
+.search {
+  flex-basis: 26%;
+  background-color: yellow;
+}
+
+.car-list {
+  background-color: green;
+  flex-grow: 1;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
