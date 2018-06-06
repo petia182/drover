@@ -39,7 +39,10 @@ class App extends Component {
         <div className="container">
           <div className="search"></div>
           <div className="car-list">
-            <Car></Car>
+            {Object.keys(this.state.cars).map(key => (
+              // console.log(this.state.cars[key].vehicle_make)
+              <Car key={key} details={this.state.cars[key]}></Car>
+            ))}
           </div>
         </div>
       </div>
