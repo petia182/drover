@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import Car from './components/car';
 import './App.css';
 
 class App extends Component {
   constructor(props) {
     super();
+    this.inputRef = React.createRef();
     this.state = {
       cars: []
     }
   }
 
   componentDidMount() {
-    console.log("mounted");
     fetch('https://app.joindrover.com/api/web/vehicles', {
       body: JSON.stringify({vehicle_type: "Consumer"}),
       method: "POST",
@@ -28,6 +29,24 @@ class App extends Component {
     })
   }
 
+  locationSearch = () => {
+    const searchInput = this.inputRef.current.value;
+    fetch('https://app.joindrover.com/api/web/vehicles', {
+      body: JSON.stringify({vehicle_type: "Consumer", location: searchInput}),
+      method: "POST",
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then((data) => {
+      // console.log(data.data)
+      this.setState({
+        cars: data.data
+      })
+    })
+  }
+
   render() {
     return (
       <div className="wrapper">
@@ -37,7 +56,11 @@ class App extends Component {
           </div>
         </div>
         <div className="container">
-          <div className="search"></div>
+          <div className="search">
+            <label htmlFor="search-input">Location</label>
+            <input ref={this.inputRef} id="search-input" type="text"/>
+            <input onClick={this.locationSearch} type="submit"/>
+          </div>
           <div className="car-list">
             {Object.keys(this.state.cars).map(key => (
               // console.log(this.state.cars[key].vehicle_make)
