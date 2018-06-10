@@ -9,13 +9,20 @@ class App extends Component {
     super();
     this.inputRef = React.createRef();
     this.state = {
-      cars: []
+      cars: [],
+      perPage: 0,
+      totalCount: 0,
+      location: "london",
+      locationValue: ""
     }
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
     fetch('https://app.joindrover.com/api/web/vehicles', {
-      body: JSON.stringify({vehicle_type: "Consumer"}),
+      body: JSON.stringify({vehicle_type: "Consumer", location: "london"}),
       method: "POST",
       headers: {
         'content-type': 'application/json'
@@ -25,13 +32,23 @@ class App extends Component {
     .then((data) => {
       console.log(data)
       this.setState({
-        cars: data.data
+        cars: data.data,
+        totalCount: data.metadata.total_count,
+        perPage: data.metadata.per_page
       })
     })
   }
 
-  locationSearch = () => {
-    const searchInput = this.inputRef.current.value;
+  handleChange(event) {
+    const input = event.target.value;
+    this.setState({
+      locationValue: event.target.value
+    })
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const searchInput = this.state.locationValue;
     fetch('https://app.joindrover.com/api/web/vehicles', {
       body: JSON.stringify({vehicle_type: "Consumer", location: searchInput}),
       method: "POST",
@@ -41,9 +58,12 @@ class App extends Component {
     })
     .then(response => response.json())
     .then((data) => {
-      // console.log(data.data)
+      console.log(data)
       this.setState({
-        cars: data.data
+        cars: data.data,
+        totalCount: data.metadata.total_count,
+        perPage: data.metadata.per_page,
+        location: searchInput
       })
     })
   }
@@ -54,17 +74,18 @@ class App extends Component {
         <Nav/>
         <div className="container">
           <div className="search">
-            <form action="">
+            <form onSubmit={this.handleSubmit}>
               <label htmlFor="search-input">Location</label>
-              <input ref={this.inputRef} id="search-input" type="text"/>
-              <input onClick={this.locationSearch} type="submit"/>
+              <input onChange={this.handleChange} ref={this.inputRef} id="search-input" type="text"/>
+              <input type="submit"/>
             </form>
           </div>
           <div className="car-list">
+            <div className="car-results-title"><h1>{this.state.totalCount} vehicles found near <span>{this.state.location}</span></h1></div>
             {Object.keys(this.state.cars).map(key => (
-              // console.log(this.state.cars[key].vehicle_make)
               <Car key={key} details={this.state.cars[key]}></Car>
             ))}
+            <div className="pagination"><p>Showing {this.state.perPage} out of {this.state.totalCount} results</p></div>
           </div>
         </div>
       </div>
