@@ -23,8 +23,9 @@ class App extends Component {
       bodyType: {}
     }
 
-    this.handleChange = this.handleChange.bind(this);
-    this.selectVehicleMake = this.selectVehicleMake.bind(this);
+    // this.handleChange = this.handleChange.bind(this);
+    // this.selectVehicleMake = this.selectVehicleMake.bind(this);
+    // this.selectGearBox = this.selectGearBox.bind(this);
   }
 
   componentDidMount() {
@@ -37,7 +38,7 @@ class App extends Component {
     })
     .then(response => response.json())
     .then((data) => {
-      console.log(data.metadata.aggregations)
+      console.log(data.metadata.aggregations.vehicle_make)
       this.setState({
         cars: data.data,
         totalCount: data.metadata.total_count,
@@ -52,14 +53,14 @@ class App extends Component {
     })
   }
 
-  handleChange(event) {
+  handleChange = (event) => {
 
     this.setState({
       locationValue: event.target.value
     })
   }
 
-  selectVehicleMake(event) {
+  selectVehicleMake = (event) => {
     event.preventDefault();
     fetch('https://app.joindrover.com/api/web/vehicles', {
       body: JSON.stringify({vehicle_type: "Consumer", vehicle_make: event.target.value}),
@@ -70,7 +71,6 @@ class App extends Component {
     })
     .then(response => response.json())
     .then((data) => {
-      console.log(data.metadata.aggregations)
       this.setState({
         cars: data.data,
         transmission: data.metadata.aggregations.transmission,
@@ -79,6 +79,33 @@ class App extends Component {
         carType: data.metadata.aggregations.tags,
         bodyType: data.metadata.aggregations.body_information,
         totalCount: data.metadata.total_count,
+        // perPage: data.metadata.per_page,
+        // location: locationInput,
+        // vehicleMake: vehicleMakeValue
+      })
+    })
+  }
+
+  selectGearBox = (event) => {
+    event.preventDefault();
+    console.log(event.target.value)
+    fetch('https://app.joindrover.com/api/web/vehicles', {
+      body: JSON.stringify({vehicle_type: "Consumer", transmission: event.target.value }),
+      method: "POST",
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then((data) => {
+      this.setState({
+        cars: data.data,
+        year: data.metadata.aggregations.year,
+        fuel: data.metadata.aggregations.fuel,
+        carType: data.metadata.aggregations.tags,
+        bodyType: data.metadata.aggregations.body_information,
+        totalCount: data.metadata.total_count,
+        vehicleMake: data.metadata.aggregations.vehicle_make,
         // perPage: data.metadata.per_page,
         // location: locationInput,
         // vehicleMake: vehicleMakeValue
@@ -102,7 +129,9 @@ class App extends Component {
             <SearchForm
               handleChange={this.handleChange}
               selectVehicleMake={this.selectVehicleMake}
+              selectGearBox={this.selectGearBox}
               vehicleMake={this.state.vehicleMake}
+              transmission={this.state.transmission}
               ></SearchForm>
           </div>
           <div className="car-list">

@@ -19,14 +19,14 @@ class SearchForm extends React.Component {
             <option key={index} value={car}>{car} ({this.props.vehicleMake[car]})</option>
           )}
         </select>
-        {/* <label htmlFor="transmission-selection">Gearbox</label>
-        <select name="" id="transmission-selection">
+        <label htmlFor="transmission-selection">Gearbox</label>
+        <select onChange={this.props.selectGearBox} name="" id="transmission-selection">
           <option defaultValue="Any">Any</option>
-          {Object.keys(this.state.transmission).map((car, index) =>
-            <option key={index} value={car}>{car} ({this.state.transmission[car]})</option>
+          {Object.keys(this.props.transmission).map((car, index) =>
+            <option key={index} value={car}>{car} ({this.props.transmission[car]})</option>
           )}
         </select>
-        <label htmlFor="year-selection">Year</label>
+        {/* <label htmlFor="year-selection">Year</label>
         <select name="" id="year-selection">
           <option defaultValue="Any">Any</option>
           {Object.keys(this.state.year).reverse().map((car, index) =>
