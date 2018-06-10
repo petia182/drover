@@ -34,7 +34,7 @@
 
 .wrapper {
   background-color: #F5F5F5;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .container {
@@ -42,6 +42,8 @@
   width: 87%;
   margin: 0 auto;
   display: flex;
+  padding-top: 40px;
+  max-width: 1300px;
 }
 
 .search, .car-list {
@@ -49,13 +51,70 @@
 }
 
 .search {
+  align-self: stretch;
   flex-basis: 26%;
   background-color: yellow;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input, select {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
 .car-list {
-  background-color: green;
+  /*background-color: green;*/
   flex-grow: 1;
+  margin-left: 20px;
+}
+
+h1 {
+  margin-top: 0;
+}
+
+h1 span {
+  text-transform: capitalize;
+}
+
+.single-car {
+  min-height: 200px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.single-car h2 {
+  text-transform: capitalize;
+}
+
+.car-image-wrapper {
+  flex-basis: 35%;
+  margin-right: 20px;
+}
+
+.car-image {
+  background-size: cover;
+  background-position: center;
+  height: 100%;
+}
+
+.car-description {
+  flex-grow: 1;
+}
+
+.car-specs, .car-features {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+}
+
+.car-specs li {
+  text-transform: capitalize;
 }
 
 @keyframes App-logo-spin {
