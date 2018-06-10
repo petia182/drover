@@ -20,7 +20,7 @@ class App extends Component {
       year: {},
       fuel: {},
       carType: {},
-      bodyType: {}
+      bodyType: {},
     }
   }
 
@@ -34,7 +34,7 @@ class App extends Component {
     })
     .then(response => response.json())
     .then((data) => {
-      // console.log(data.metadata.aggregations.vehicle_make)
+      console.log(data.data)
       this.setState({
         cars: data.data,
         totalCount: data.metadata.total_count,
@@ -44,7 +44,7 @@ class App extends Component {
         year: data.metadata.aggregations.year,
         fuel: data.metadata.aggregations.fuel,
         carType: data.metadata.aggregations.tags,
-        bodyType: data.metadata.aggregations.body_information
+        bodyType: data.metadata.aggregations.body_information,
       })
     })
   }
@@ -175,7 +175,7 @@ class App extends Component {
             {Object.keys(this.state.cars).map(key => (
               <Car key={key} details={this.state.cars[key]}></Car>
             ))}
-            {/* <div className="pagination"><p>Showing {this.state.perPage} out of {this.state.totalCount} results</p></div> */}
+            <div className="pagination"><p>Showing {this.state.perPage} of {this.state.totalCount} results</p></div>
           </div>
         </div>
       </div>

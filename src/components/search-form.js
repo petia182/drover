@@ -11,8 +11,6 @@ class SearchForm extends React.Component {
   render() {
     return (
       <React.Fragment>
-        {/* <label htmlFor="location-input">Location</label>
-        <input onChange={this.props.handleChange} id="location-input" type="text"/> */}
         <label htmlFor="make-selection">Vehicle Make</label>
         <select onChange={this.props.selectVehicleMake} name="" id="make-selection">
           <option defaultValue="Any">Any</option>

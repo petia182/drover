@@ -44,6 +44,7 @@
   display: flex;
   padding-top: 40px;
   max-width: 1300px;
+  padding-bottom: 20px;
 }
 
 .search, .car-list {
@@ -72,6 +73,7 @@ input, select {
   background-color: white;
   border: 1px solid lightgrey;
   border-radius: 0;
+  cursor: pointer;
 }
 
 label {
@@ -97,15 +99,22 @@ h1 span {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
+  background-color: white;
+  border: 1px solid lightgrey;
 }
 
 .single-car h2 {
   text-transform: capitalize;
+  margin: 0;
+  font-size: 20px;
+}
+
+.located {
+  margin-top: 5px;
 }
 
 .car-image-wrapper {
   flex-basis: 35%;
-  margin-right: 20px;
 }
 
 .car-image {
@@ -116,17 +125,35 @@ h1 span {
 
 .car-description {
   flex-grow: 1;
+  padding: 15px;
+}
+
+.car-description > div {
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+}
+
+p, li {
+  font-size: 14px;
+}
+
+.car-specs li {
+  text-transform: capitalize;
+  font-weight: bold;
+}
+
+.car-specs {
+  border-top: 1px solid lightgrey;
+  border-bottom: 1px solid lightgrey;
+  padding: 15px 0;
+  margin: 0;
 }
 
 .car-specs, .car-features {
   list-style: none;
   display: flex;
   justify-content: space-between;
-  padding: 0;
-}
-
-.car-specs li {
-  text-transform: capitalize;
 }
 
 @keyframes App-logo-spin {
