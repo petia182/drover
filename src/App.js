@@ -15,7 +15,6 @@ class App extends Component {
       perPage: 0,
       totalCount: 0,
       location: "london",
-      locationValue: "",
       vehicleMake: {},
       transmission: {},
       year: {},
@@ -27,7 +26,7 @@ class App extends Component {
 
   componentDidMount() {
     fetch('https://app.joindrover.com/api/web/vehicles', {
-      body: JSON.stringify({vehicle_type: "Consumer", location: "london"}),
+      body: JSON.stringify({vehicle_type: "Consumer", location: this.state.location}),
       method: "POST",
       headers: {
         'content-type': 'application/json'
@@ -61,7 +60,7 @@ class App extends Component {
     })
     .then(response => response.json())
     .then((data) => {
-      console.log(data.data.length)
+      console.log(locationInput)
       if (data.data.length > 0) {
         this.setState({
           cars: data.data,
@@ -78,6 +77,7 @@ class App extends Component {
       } else {
         this.setState({
           cars: data.data,
+          location: locationInput,
           totalCount: data.data.length,
         })
       }
@@ -171,8 +171,7 @@ class App extends Component {
             </form>
           </div>
           <div className="car-list">
-            <div className="car-results-title"><h1>{this.state.totalCount} vehicles found.</h1></div>
-              {/* near <span>{this.state.location}</span> */}
+            <div className="car-results-title"><h1>{this.state.totalCount} {this.state.totalCount === 1 ? "vehicle" : "vehicles"} found near <span>{this.state.location}.</span></h1></div>
             {Object.keys(this.state.cars).map(key => (
               <Car key={key} details={this.state.cars[key]}></Car>
             ))}

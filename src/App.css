@@ -53,17 +53,29 @@
 .search {
   align-self: stretch;
   flex-basis: 26%;
-  background-color: yellow;
+  margin-top: 35px;
 }
 
 form {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  overflow: hidden;
 }
 
 input, select {
-  width: 100%;
+  /*width: 100%;*/
   margin-bottom: 20px;
+  -webkit-appearance: none;
+  padding: 10px;
+  box-shadow: none;
+  background-color: white;
+  border: 1px solid lightgrey;
+  border-radius: 0;
+}
+
+label {
+  margin-bottom: 5px;
 }
 
 .car-list {
