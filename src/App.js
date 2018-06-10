@@ -13,7 +13,8 @@ class App extends Component {
       perPage: 0,
       totalCount: 0,
       location: "london",
-      locationValue: ""
+      locationValue: "",
+      vehicleMake: []
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -30,11 +31,12 @@ class App extends Component {
     })
     .then(response => response.json())
     .then((data) => {
-      console.log(data)
+      // console.log(Object.keys(data.metadata.aggregations.vehicle_make));
       this.setState({
         cars: data.data,
         totalCount: data.metadata.total_count,
-        perPage: data.metadata.per_page
+        perPage: data.metadata.per_page,
+        vehicleMake: Object.keys(data.metadata.aggregations.vehicle_make)
       })
     })
   }
@@ -68,6 +70,13 @@ class App extends Component {
     })
   }
 
+  // renderCars() {
+  //   this.state.vehicleMake.forEach(function(car){
+  //
+  //     return <li>{car}</li>
+  //   })
+  // }
+
   render() {
     return (
       <div className="wrapper">
@@ -77,6 +86,12 @@ class App extends Component {
             <form onSubmit={this.handleSubmit}>
               <label htmlFor="search-input">Location</label>
               <input onChange={this.handleChange} ref={this.inputRef} id="search-input" type="text"/>
+              <select name="" id="">
+                <option defaultValue="Any">Any</option>
+                {this.state.vehicleMake.map(car =>
+                  <option value={car}>{car}</option>
+                )}
+              </select>
               <input type="submit"/>
             </form>
           </div>
