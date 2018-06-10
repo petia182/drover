@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Car from './components/car';
+import SearchForm from './components/search-form';
 import Nav from './components/nav';
 import './App.css';
 
@@ -14,11 +15,16 @@ class App extends Component {
       totalCount: 0,
       location: "london",
       locationValue: "",
-      vehicleMake: []
+      vehicleMake: {},
+      transmission: {},
+      year: {},
+      fuel: {},
+      carType: {},
+      bodyType: {}
     }
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.selectVehicleMake = this.selectVehicleMake.bind(this);
   }
 
   componentDidMount() {
@@ -31,28 +37,32 @@ class App extends Component {
     })
     .then(response => response.json())
     .then((data) => {
-      // console.log(Object.keys(data.metadata.aggregations.vehicle_make));
+      console.log(data.metadata.aggregations)
       this.setState({
         cars: data.data,
         totalCount: data.metadata.total_count,
         perPage: data.metadata.per_page,
-        vehicleMake: Object.keys(data.metadata.aggregations.vehicle_make)
+        vehicleMake: data.metadata.aggregations.vehicle_make,
+        transmission: data.metadata.aggregations.transmission,
+        year: data.metadata.aggregations.year,
+        fuel: data.metadata.aggregations.fuel,
+        carType: data.metadata.aggregations.tags,
+        bodyType: data.metadata.aggregations.body_information
       })
     })
   }
 
   handleChange(event) {
-    const input = event.target.value;
+
     this.setState({
       locationValue: event.target.value
     })
   }
 
-  handleSubmit(event) {
+  selectVehicleMake(event) {
     event.preventDefault();
-    const searchInput = this.state.locationValue;
     fetch('https://app.joindrover.com/api/web/vehicles', {
-      body: JSON.stringify({vehicle_type: "Consumer", location: searchInput}),
+      body: JSON.stringify({vehicle_type: "Consumer", vehicle_make: event.target.value}),
       method: "POST",
       headers: {
         'content-type': 'application/json'
@@ -60,12 +70,18 @@ class App extends Component {
     })
     .then(response => response.json())
     .then((data) => {
-      console.log(data)
+      console.log(data.metadata.aggregations)
       this.setState({
         cars: data.data,
+        transmission: data.metadata.aggregations.transmission,
+        year: data.metadata.aggregations.year,
+        fuel: data.metadata.aggregations.fuel,
+        carType: data.metadata.aggregations.tags,
+        bodyType: data.metadata.aggregations.body_information,
         totalCount: data.metadata.total_count,
-        perPage: data.metadata.per_page,
-        location: searchInput
+        // perPage: data.metadata.per_page,
+        // location: locationInput,
+        // vehicleMake: vehicleMakeValue
       })
     })
   }
@@ -83,24 +99,19 @@ class App extends Component {
         <Nav/>
         <div className="container">
           <div className="search">
-            <form onSubmit={this.handleSubmit}>
-              <label htmlFor="search-input">Location</label>
-              <input onChange={this.handleChange} ref={this.inputRef} id="search-input" type="text"/>
-              <select name="" id="">
-                <option defaultValue="Any">Any</option>
-                {this.state.vehicleMake.map(car =>
-                  <option value={car}>{car}</option>
-                )}
-              </select>
-              <input type="submit"/>
-            </form>
+            <SearchForm
+              handleChange={this.handleChange}
+              selectVehicleMake={this.selectVehicleMake}
+              vehicleMake={this.state.vehicleMake}
+              ></SearchForm>
           </div>
           <div className="car-list">
-            <div className="car-results-title"><h1>{this.state.totalCount} vehicles found near <span>{this.state.location}</span></h1></div>
+            <div className="car-results-title"><h1>{this.state.totalCount} vehicles found.</h1></div>
+              {/* near <span>{this.state.location}</span> */}
             {Object.keys(this.state.cars).map(key => (
               <Car key={key} details={this.state.cars[key]}></Car>
             ))}
-            <div className="pagination"><p>Showing {this.state.perPage} out of {this.state.totalCount} results</p></div>
+            {/* <div className="pagination"><p>Showing {this.state.perPage} out of {this.state.totalCount} results</p></div> */}
           </div>
         </div>
       </div>
