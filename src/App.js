@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import Autocomplete from 'react-google-autocomplete';
+
 import Car from './components/car';
 import SearchForm from './components/search-form';
 import Nav from './components/nav';
@@ -22,10 +23,6 @@ class App extends Component {
       carType: {},
       bodyType: {}
     }
-
-    // this.handleChange = this.handleChange.bind(this);
-    // this.selectVehicleMake = this.selectVehicleMake.bind(this);
-    // this.selectGearBox = this.selectGearBox.bind(this);
   }
 
   componentDidMount() {
@@ -38,7 +35,7 @@ class App extends Component {
     })
     .then(response => response.json())
     .then((data) => {
-      console.log(data.metadata.aggregations.vehicle_make)
+      // console.log(data.metadata.aggregations.vehicle_make)
       this.setState({
         cars: data.data,
         totalCount: data.metadata.total_count,
@@ -54,9 +51,36 @@ class App extends Component {
   }
 
   handleChange = (event) => {
-
-    this.setState({
-      locationValue: event.target.value
+    const locationInput = event.name;
+    fetch('https://app.joindrover.com/api/web/vehicles', {
+      body: JSON.stringify({vehicle_type: "Consumer", location: locationInput}),
+      method: "POST",
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then((data) => {
+      console.log(data.data.length)
+      if (data.data.length > 0) {
+        this.setState({
+          cars: data.data,
+          location: locationInput,
+          totalCount: data.metadata.total_count,
+          perPage: data.metadata.per_page,
+          vehicleMake: data.metadata.aggregations.vehicle_make,
+          transmission: data.metadata.aggregations.transmission,
+          year: data.metadata.aggregations.year,
+          fuel: data.metadata.aggregations.fuel,
+          carType: data.metadata.aggregations.tags,
+          bodyType: data.metadata.aggregations.body_information
+        })
+      } else {
+        this.setState({
+          cars: data.data,
+          totalCount: data.data.length,
+        })
+      }
     })
   }
 
@@ -79,7 +103,7 @@ class App extends Component {
         carType: data.metadata.aggregations.tags,
         bodyType: data.metadata.aggregations.body_information,
         totalCount: data.metadata.total_count,
-        // perPage: data.metadata.per_page,
+        perPage: data.metadata.per_page,
         // location: locationInput,
         // vehicleMake: vehicleMakeValue
       })
@@ -88,7 +112,7 @@ class App extends Component {
 
   selectGearBox = (event) => {
     event.preventDefault();
-    console.log(event.target.value)
+    // console.log(event.target.value)
     fetch('https://app.joindrover.com/api/web/vehicles', {
       body: JSON.stringify({vehicle_type: "Consumer", transmission: event.target.value }),
       method: "POST",
@@ -126,6 +150,17 @@ class App extends Component {
         <Nav/>
         <div className="container">
           <div className="search">
+            <form action="">
+              <label htmlFor="location-input">Location</label>
+            <Autocomplete
+              id="location-input"
+              onPlaceSelected={this.handleChange}
+              // onPlaceSelected={(place) => {
+              //   console.log(place.name);
+              // }}
+              types={['(regions)']}
+              componentRestrictions={{country: "uk"}}
+            />
             <SearchForm
               handleChange={this.handleChange}
               selectVehicleMake={this.selectVehicleMake}
@@ -133,6 +168,7 @@ class App extends Component {
               vehicleMake={this.state.vehicleMake}
               transmission={this.state.transmission}
               ></SearchForm>
+            </form>
           </div>
           <div className="car-list">
             <div className="car-results-title"><h1>{this.state.totalCount} vehicles found.</h1></div>
