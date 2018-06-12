@@ -16,8 +16,11 @@ class App extends Component {
       totalCount: 0,
       location: "london",
       vehicleMake: {},
+      vehicleMakeValue: undefined,
       transmission: {},
+      transmissionValue: undefined,
       year: {},
+      yearValue: undefined,
       fuel: {},
       carType: {},
       bodyType: {},
@@ -34,11 +37,11 @@ class App extends Component {
     })
     .then(response => response.json())
     .then((data) => {
-      console.log(data.data)
+      console.log(data.metadata.aggregations)
       this.setState({
         cars: data.data,
         totalCount: data.metadata.total_count,
-        perPage: data.metadata.per_page,
+        // perPage: data.metadata.per_page,
         vehicleMake: data.metadata.aggregations.vehicle_make,
         transmission: data.metadata.aggregations.transmission,
         year: data.metadata.aggregations.year,
@@ -49,10 +52,10 @@ class App extends Component {
     })
   }
 
-  handleChange = (event) => {
+  locationSearch = (event) => {
     const locationInput = event.name;
     fetch('https://app.joindrover.com/api/web/vehicles', {
-      body: JSON.stringify({vehicle_type: "Consumer", location: locationInput}),
+      body: JSON.stringify({vehicle_type: "Consumer", location: locationInput, year: this.state.yearValue}),
       method: "POST",
       headers: {
         'content-type': 'application/json'
@@ -60,13 +63,13 @@ class App extends Component {
     })
     .then(response => response.json())
     .then((data) => {
-      console.log(locationInput)
       if (data.data.length > 0) {
+        console.log(data.metadata.aggregations.vehicle_make)
         this.setState({
           cars: data.data,
           location: locationInput,
           totalCount: data.metadata.total_count,
-          perPage: data.metadata.per_page,
+          // perPage: data.metadata.per_page,
           vehicleMake: data.metadata.aggregations.vehicle_make,
           transmission: data.metadata.aggregations.transmission,
           year: data.metadata.aggregations.year,
@@ -78,16 +81,17 @@ class App extends Component {
         this.setState({
           cars: data.data,
           location: locationInput,
-          totalCount: data.data.length,
+          totalCount: data.data.length
         })
       }
     })
   }
 
   selectVehicleMake = (event) => {
+    const vehicleMakeValue = event.target.value;
     event.preventDefault();
     fetch('https://app.joindrover.com/api/web/vehicles', {
-      body: JSON.stringify({vehicle_type: "Consumer", vehicle_make: event.target.value}),
+      body: JSON.stringify({vehicle_type: "Consumer", location: this.state.location, vehicle_make: vehicleMakeValue}),
       method: "POST",
       headers: {
         'content-type': 'application/json'
@@ -103,18 +107,18 @@ class App extends Component {
         carType: data.metadata.aggregations.tags,
         bodyType: data.metadata.aggregations.body_information,
         totalCount: data.metadata.total_count,
-        perPage: data.metadata.per_page,
-        // location: locationInput,
-        // vehicleMake: vehicleMakeValue
+        // perPage: data.metadata.per_page,
+        vehicleMakeValue
       })
     })
   }
 
   selectGearBox = (event) => {
     event.preventDefault();
-    // console.log(event.target.value)
+    console.log(this.state.vehicleMakeValue)
+    const transmissionValue = event.target.value;
     fetch('https://app.joindrover.com/api/web/vehicles', {
-      body: JSON.stringify({vehicle_type: "Consumer", transmission: event.target.value }),
+      body: JSON.stringify({vehicle_type: "Consumer", transmission: transmissionValue, location: this.state.location, vehicle_make: this.state.vehicleMakeValue }),
       method: "POST",
       headers: {
         'content-type': 'application/json'
@@ -122,6 +126,8 @@ class App extends Component {
     })
     .then(response => response.json())
     .then((data) => {
+      console.log(this.state.vehicleMakeValue)
+      console.log(data)
       this.setState({
         cars: data.data,
         year: data.metadata.aggregations.year,
@@ -130,9 +136,7 @@ class App extends Component {
         bodyType: data.metadata.aggregations.body_information,
         totalCount: data.metadata.total_count,
         vehicleMake: data.metadata.aggregations.vehicle_make,
-        // perPage: data.metadata.per_page,
-        // location: locationInput,
-        // vehicleMake: vehicleMakeValue
+        transmissionValue,
       })
     })
   }
@@ -154,19 +158,17 @@ class App extends Component {
               <label htmlFor="location-input">Location</label>
             <Autocomplete
               id="location-input"
-              onPlaceSelected={this.handleChange}
-              // onPlaceSelected={(place) => {
-              //   console.log(place.name);
-              // }}
+              onPlaceSelected={this.locationSearch}
               types={['(regions)']}
               componentRestrictions={{country: "uk"}}
             />
             <SearchForm
-              handleChange={this.handleChange}
+              locationSearch={this.locationSearch}
               selectVehicleMake={this.selectVehicleMake}
               selectGearBox={this.selectGearBox}
               vehicleMake={this.state.vehicleMake}
               transmission={this.state.transmission}
+              year={this.state.year}
               ></SearchForm>
             </form>
           </div>
@@ -175,7 +177,7 @@ class App extends Component {
             {Object.keys(this.state.cars).map(key => (
               <Car key={key} details={this.state.cars[key]}></Car>
             ))}
-            <div className="pagination"><p>Showing {this.state.perPage} of {this.state.totalCount} results</p></div>
+            {/* <div className="pagination"><p>Showing {this.state.perPage} of {this.state.totalCount} results</p></div> */}
           </div>
         </div>
       </div>
