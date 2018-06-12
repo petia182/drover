@@ -1,10 +1,15 @@
 import React from 'react';
 
+import { capitalize } from './helper-functions';
+
 class Car extends React.Component {
 
   render() {
     const { vehicle_make, vehicle_model, postcode, year, body_information, fuel, transmission, color, images, available_start_date } = this.props.details;
     const image = images[0].small_image_url;
+    const features = this.props.details.features;
+    // console.log(features)
+
     return(
       <div className="single-car">
         <div className="car-image-wrapper">
@@ -25,15 +30,11 @@ class Car extends React.Component {
             <li>{transmission}</li>
             <li>{color}</li>
           </ul>
-          {/* <ul className="car-features">
-            <li><p></p></li>
-            <li><p></p></li>
-            <li><p></p></li>
-            <li><p></p></li>
-            <li><p></p></li>
-            <li><p></p></li>
-            <li><p></p></li>
-          </ul> */}
+          <ul className="car-features">
+            {features.map(feature => {
+              return <li>{capitalize(feature.split('_').join(' '))}</li>
+            })}
+          </ul>
         </div>
       </div>
     )

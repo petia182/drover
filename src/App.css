@@ -115,7 +115,7 @@ h1 span {
 }
 
 .car-image-wrapper {
-  flex-basis: 35%;
+  flex-grow: 1;
 }
 
 .car-image {
@@ -125,7 +125,7 @@ h1 span {
 }
 
 .car-description {
-  flex-grow: 1;
+  flex-basis: 65%;
   padding: 15px;
 }
 
@@ -149,12 +149,34 @@ p, li {
   border-bottom: 1px solid lightgrey;
   padding: 15px 0;
   margin: 0;
+  justify-content: space-between;
 }
 
 .car-specs, .car-features {
   list-style: none;
   display: flex;
-  justify-content: space-between;
+}
+
+.car-features {
+  padding: 0;
+  flex-wrap: wrap;
+}
+
+.car-features li {
+  padding: 0 .5rem 0.3rem 0.5rem;
+  /*padding-right: .5rem;*/
+  color: #7d807c;
+  font-size: 13px;
+  position: relative;
+  letter-spacing: 0.5px;
+}
+
+.car-features li:after {
+  content: '•';
+  padding-left: .5rem;
+  padding-right: .25rem;
+  position: absolute;
+  right: -.50rem;
 }
 
 @keyframes App-logo-spin {
