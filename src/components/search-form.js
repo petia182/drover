@@ -12,7 +12,7 @@ class SearchForm extends React.Component {
     return (
       <React.Fragment>
         <label htmlFor="make-selection">Vehicle Make</label>
-        <select value={this.props.vehicleMakeValue} onChange={this.props.selectVehicleMake} name="" id="make-selection">
+        <select onChange={this.props.selectVehicleMake} name="" id="make-selection">
           <option disabled selected>Select Vehicle Make</option>
           {Object.keys(this.props.vehicleMake).map((car, index) =>
             <option key={index} value={car}>{capitalize(car)} ({this.props.vehicleMake[car]})</option>
@@ -34,25 +34,25 @@ class SearchForm extends React.Component {
         </select>
         <label htmlFor="fuel-selection">Fuel Type</label>
         <select onChange={this.props.selectFuelType} name="" id="fuel-selection">
-          <option defaultValue="Any">Any</option>
+          {/* <option defaultValue="Any">Any</option> */}
           {Object.keys(this.props.fuel).map((car, index) =>
             <option key={index} value={car}>{car} ({this.props.fuel[car]})</option>
           )}
         </select>
         {/* <label htmlFor="car-type-selection">Car Type</label>
-        <select name="" id="car-type-selection">
+        <select onChange={this.props.selectCarType} name="" id="car-type-selection">
           <option defaultValue="Any">Any</option>
-          {Object.keys(this.state.carType).map((car, index) =>
-            <option key={index} value={car}>{car} ({this.state.carType[car]})</option>
-          )}
-        </select>
-        <label htmlFor="body-type-selection">Body Type</label>
-        <select name="" id="body-type-selection">
-          <option defaultValue="Any">Any</option>
-          {Object.keys(this.state.bodyType).map((car, index) =>
-            <option key={index} value={car}>{car} ({this.state.bodyType[car]})</option>
+          {Object.keys(this.props.carType).map((car, index) =>
+            <option key={index} value={car}>{car} ({this.props.carType[car]})</option>
           )}
         </select> */}
+        <label htmlFor="body-type-selection">Body Type</label>
+        <select onChange={this.props.selectBodyType} name="" id="body-type-selection">
+          {/* <option defaultValue="Any">Any</option> */}
+          {Object.keys(this.props.bodyType).map((car, index) =>
+            <option key={index} value={car}>{car} ({this.props.bodyType[car]})</option>
+          )}
+        </select>
     </React.Fragment>
     )
   }
