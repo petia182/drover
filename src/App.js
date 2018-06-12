@@ -29,7 +29,7 @@ class App extends Component {
 
   componentDidMount() {
     fetch('https://app.joindrover.com/api/web/vehicles', {
-      body: JSON.stringify({vehicle_type: "Consumer", location: this.state.location}),
+      body: JSON.stringify({vehicle_type: "Consumer", location: this.state.location, vehicle_make: this.state.vehicleMakeValue, transmission: this.state.transmissionValue, year: this.state.yearValue}),
       method: "POST",
       headers: {
         'content-type': 'application/json'
@@ -37,7 +37,7 @@ class App extends Component {
     })
     .then(response => response.json())
     .then((data) => {
-      console.log(data.metadata.aggregations)
+      // console.log(data.metadata.aggregations)
       this.setState({
         cars: data.data,
         totalCount: data.metadata.total_count,
@@ -55,7 +55,7 @@ class App extends Component {
   locationSearch = (event) => {
     const locationInput = event.name;
     fetch('https://app.joindrover.com/api/web/vehicles', {
-      body: JSON.stringify({vehicle_type: "Consumer", location: locationInput, year: this.state.yearValue}),
+      body: JSON.stringify({vehicle_type: "Consumer", location: locationInput, vehicle_make: this.state.vehicleMakeValue, transmission: this.state.transmissionValue, year: this.state.yearValue}),
       method: "POST",
       headers: {
         'content-type': 'application/json'
@@ -64,24 +64,29 @@ class App extends Component {
     .then(response => response.json())
     .then((data) => {
       if (data.data.length > 0) {
-        console.log(data.metadata.aggregations.vehicle_make)
         this.setState({
           cars: data.data,
           location: locationInput,
-          totalCount: data.metadata.total_count,
-          // perPage: data.metadata.per_page,
           vehicleMake: data.metadata.aggregations.vehicle_make,
           transmission: data.metadata.aggregations.transmission,
           year: data.metadata.aggregations.year,
           fuel: data.metadata.aggregations.fuel,
           carType: data.metadata.aggregations.tags,
-          bodyType: data.metadata.aggregations.body_information
+          bodyType: data.metadata.aggregations.body_information,
+          totalCount: data.metadata.total_count,
+          // perPage: data.metadata.per_page,
         })
       } else {
         this.setState({
           cars: data.data,
           location: locationInput,
-          totalCount: data.data.length
+          totalCount: 0,
+          vehicleMake: {},
+          transmission: {},
+          year: {},
+          fuel: {},
+          carType: {},
+          bodyType: {},
         })
       }
     })
@@ -91,7 +96,7 @@ class App extends Component {
     const vehicleMakeValue = event.target.value;
     event.preventDefault();
     fetch('https://app.joindrover.com/api/web/vehicles', {
-      body: JSON.stringify({vehicle_type: "Consumer", location: this.state.location, vehicle_make: vehicleMakeValue}),
+      body: JSON.stringify({vehicle_type: "Consumer", location: this.state.location, vehicle_make: vehicleMakeValue, transmission: this.state.transmissionValue, year: this.state.yearValue}),
       method: "POST",
       headers: {
         'content-type': 'application/json'
@@ -115,7 +120,6 @@ class App extends Component {
 
   selectGearBox = (event) => {
     event.preventDefault();
-    console.log(this.state.vehicleMakeValue)
     const transmissionValue = event.target.value;
     fetch('https://app.joindrover.com/api/web/vehicles', {
       body: JSON.stringify({vehicle_type: "Consumer", transmission: transmissionValue, location: this.state.location, vehicle_make: this.state.vehicleMakeValue }),
@@ -126,8 +130,6 @@ class App extends Component {
     })
     .then(response => response.json())
     .then((data) => {
-      console.log(this.state.vehicleMakeValue)
-      console.log(data)
       this.setState({
         cars: data.data,
         year: data.metadata.aggregations.year,
@@ -137,6 +139,33 @@ class App extends Component {
         totalCount: data.metadata.total_count,
         vehicleMake: data.metadata.aggregations.vehicle_make,
         transmissionValue,
+      })
+    })
+  }
+
+  selectYear = (event) => {
+    event.preventDefault();
+    const yearValue = parseInt(event.target.value);
+    fetch('https://app.joindrover.com/api/web/vehicles', {
+      body: JSON.stringify({vehicle_type: "Consumer", transmission: this.state.transmissionValue, location: this.state.location, vehicle_make: this.state.vehicleMakeValue, year: yearValue}),
+      method: "POST",
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then((data) => {
+      console.log(data.metadata.aggregations)
+      this.setState({
+        cars: data.data,
+        year: data.metadata.aggregations.year,
+        fuel: data.metadata.aggregations.fuel,
+        carType: data.metadata.aggregations.tags,
+        bodyType: data.metadata.aggregations.body_information,
+        totalCount: data.metadata.total_count,
+        transmission: data.metadata.aggregations.transmission,
+        vehicleMake: data.metadata.aggregations.vehicle_make,
+        yearValue
       })
     })
   }
@@ -166,6 +195,7 @@ class App extends Component {
               locationSearch={this.locationSearch}
               selectVehicleMake={this.selectVehicleMake}
               selectGearBox={this.selectGearBox}
+              selectYear={this.selectYear}
               vehicleMake={this.state.vehicleMake}
               transmission={this.state.transmission}
               year={this.state.year}
