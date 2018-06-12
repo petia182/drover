@@ -26,7 +26,7 @@ class App extends Component {
       carType: {},
       carTypeValue: undefined,
       bodyType: {},
-      bodyTypeValue: {},
+      bodyTypeValue: undefined,
     }
   }
 
@@ -65,6 +65,7 @@ class App extends Component {
     })
     .then(response => response.json())
     .then((data) => {
+      // console.log(data)
       if (data.data.length > 0) {
         this.setState({
           cars: data.data,
@@ -145,7 +146,7 @@ class App extends Component {
 
   selectYear = (event) => {
     event.preventDefault();
-    const yearValue = parseInt(event.target.value);
+    const yearValue = parseInt(event.target.value, 0);
     fetch('https://app.joindrover.com/api/web/vehicles', {
       body: JSON.stringify({vehicle_type: "Consumer", transmission: this.state.transmissionValue, location: this.state.location, vehicle_make: this.state.vehicleMakeValue, year: yearValue, fuel: this.state.fuelValue, body_type: this.state.bodyTypeValue}),
       method: "POST",
@@ -191,7 +192,6 @@ class App extends Component {
         totalCount: data.metadata.total_count,
         transmission: data.metadata.aggregations.transmission,
         vehicleMake: data.metadata.aggregations.vehicle_make,
-        year: data.metadata.aggregations.year,
         fuelValue
       })
     })
@@ -219,7 +219,6 @@ class App extends Component {
         totalCount: data.metadata.total_count,
         transmission: data.metadata.aggregations.transmission,
         vehicleMake: data.metadata.aggregations.vehicle_make,
-        year: data.metadata.aggregations.year,
         bodyTypeValue
       })
     })

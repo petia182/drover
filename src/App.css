@@ -66,7 +66,6 @@ form {
 }
 
 input, select {
-  /*width: 100%;*/
   margin-bottom: 20px;
   -webkit-appearance: none;
   padding: 10px;
@@ -82,7 +81,6 @@ label {
 }
 
 .car-list {
-  /*background-color: green;*/
   flex-grow: 1;
   margin-left: 20px;
 }
@@ -126,13 +124,14 @@ h1 span {
 
 .car-description {
   flex-basis: 65%;
-  padding: 15px;
+  padding: 15px 15px 15px 10px;
 }
 
 .car-description > div {
   justify-content: space-between;
   display: flex;
   align-items: center;
+  padding-left: 10px;
 }
 
 p, li {
@@ -147,7 +146,7 @@ p, li {
 .car-specs {
   border-top: 1px solid lightgrey;
   border-bottom: 1px solid lightgrey;
-  padding: 15px 0;
+  padding: 15px 15px 15px 10px;
   margin: 0;
   justify-content: space-between;
 }

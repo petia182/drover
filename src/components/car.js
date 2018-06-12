@@ -31,8 +31,8 @@ class Car extends React.Component {
             <li>{color}</li>
           </ul>
           <ul className="car-features">
-            {features.map(feature => {
-              return <li>{capitalize(feature.split('_').join(' '))}</li>
+            {features.map((feature, index) => {
+              return <li key={index}>{capitalize(feature.split('_').join(' '))}</li>
             })}
           </ul>
         </div>
