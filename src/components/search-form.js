@@ -12,7 +12,7 @@ class SearchForm extends React.Component {
     return (
       <React.Fragment>
         <label htmlFor="make-selection">Vehicle Make</label>
-        <select onChange={this.props.selectVehicleMake} name="" id="make-selection">
+        <select value={this.props.vehicleMakeValue} onChange={this.props.selectVehicleMake} name="" id="make-selection">
           <option disabled selected>Select Vehicle Make</option>
           {Object.keys(this.props.vehicleMake).map((car, index) =>
             <option key={index} value={car}>{capitalize(car)} ({this.props.vehicleMake[car]})</option>
@@ -32,14 +32,14 @@ class SearchForm extends React.Component {
             <option key={index} value={car}>{car} ({this.props.year[car]})</option>
           )}
         </select>
-        {/* <label htmlFor="fuel-selection">Fuel Type</label>
-        <select name="" id="fuel-selection">
+        <label htmlFor="fuel-selection">Fuel Type</label>
+        <select onChange={this.props.selectFuelType} name="" id="fuel-selection">
           <option defaultValue="Any">Any</option>
-          {Object.keys(this.state.fuel).map((car, index) =>
-            <option key={index} value={car}>{car} ({this.state.fuel[car]})</option>
+          {Object.keys(this.props.fuel).map((car, index) =>
+            <option key={index} value={car}>{car} ({this.props.fuel[car]})</option>
           )}
         </select>
-        <label htmlFor="car-type-selection">Car Type</label>
+        {/* <label htmlFor="car-type-selection">Car Type</label>
         <select name="" id="car-type-selection">
           <option defaultValue="Any">Any</option>
           {Object.keys(this.state.carType).map((car, index) =>
