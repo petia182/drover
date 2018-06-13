@@ -54,7 +54,7 @@
 
 .search {
   align-self: stretch;
-  flex-basis: 26%;
+  width: 25%;
   margin-top: 35px;
 }
 
@@ -82,7 +82,7 @@ label {
 }
 
 .car-list {
-  flex-grow: 1;
+  width: 75%;
   margin-left: 20px;
 }
 
@@ -116,7 +116,7 @@ h1 span {
 }
 
 .car-image-wrapper {
-  flex-grow: 1;
+  width: 35%;
 }
 
 .car-image {
@@ -126,7 +126,7 @@ h1 span {
 }
 
 .car-description {
-  flex-basis: 65%;
+  width: 65%;
   padding-top: 15px;
 }
 
