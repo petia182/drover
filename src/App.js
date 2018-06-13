@@ -54,6 +54,10 @@ class App extends Component {
     })
   }
 
+  getUserInput(event) {
+    return event.target.value
+  }
+
   locationSearch = (event) => {
     const locationInput = event.name;
     fetch('https://app.joindrover.com/api/web/vehicles', {
@@ -95,7 +99,7 @@ class App extends Component {
   }
 
   selectVehicleMake = (event) => {
-    const vehicleMakeValue = event.target.value;
+    const vehicleMakeValue = this.getUserInput(event);
     event.preventDefault();
     fetch('https://app.joindrover.com/api/web/vehicles', {
       body: JSON.stringify({vehicle_type: "Consumer", location: this.state.location, vehicle_make: vehicleMakeValue, transmission: this.state.transmissionValue, year: this.state.yearValue, fuel: this.state.fuelValue, body_type: this.state.bodyTypeValue}),
@@ -121,7 +125,7 @@ class App extends Component {
 
   selectGearBox = (event) => {
     event.preventDefault();
-    const transmissionValue = event.target.value;
+    const transmissionValue = this.getUserInput(event);
     fetch('https://app.joindrover.com/api/web/vehicles', {
       body: JSON.stringify({vehicle_type: "Consumer", transmission: transmissionValue, location: this.state.location, vehicle_make: this.state.vehicleMakeValue, year: this.state.yearValue, fuel: this.state.fuelValue, body_type: this.state.bodyTypeValue }),
       method: "POST",
@@ -146,7 +150,7 @@ class App extends Component {
 
   selectYear = (event) => {
     event.preventDefault();
-    const yearValue = parseInt(event.target.value, 0);
+    const yearValue = parseInt(this.getUserInput(event), 0);
     fetch('https://app.joindrover.com/api/web/vehicles', {
       body: JSON.stringify({vehicle_type: "Consumer", transmission: this.state.transmissionValue, location: this.state.location, vehicle_make: this.state.vehicleMakeValue, year: yearValue, fuel: this.state.fuelValue, body_type: this.state.bodyTypeValue}),
       method: "POST",
@@ -172,7 +176,7 @@ class App extends Component {
 
   selectFuelType = (event) => {
     event.preventDefault();
-    const fuelValue = event.target.value;
+    const fuelValue = this.getUserInput(event);
     fetch('https://app.joindrover.com/api/web/vehicles', {
       body: JSON.stringify({vehicle_type: "Consumer", transmission: this.state.transmissionValue, location: this.state.location, vehicle_make: this.state.vehicleMakeValue, year: this.state.yearValue, fuel: fuelValue, body_type: this.state.bodyTypeValue}),
       method: "POST",
@@ -199,7 +203,7 @@ class App extends Component {
 
   selectBodyType = (event) => {
     event.preventDefault();
-    const bodyTypeValue = event.target.value;
+    const bodyTypeValue = this.getUserInput(event);
     fetch('https://app.joindrover.com/api/web/vehicles', {
       body: JSON.stringify({vehicle_type: "Consumer", transmission: this.state.transmissionValue, location: this.state.location, vehicle_make: this.state.vehicleMakeValue, year: this.state.yearValue, fuel: this.state.fuelValue, body_type: bodyTypeValue}),
       method: "POST",
