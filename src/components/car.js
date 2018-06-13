@@ -39,7 +39,7 @@ class Car extends React.Component {
           </ul>
           <div class="price">
             <div>
-              <p>£ {price}<span>/month</span></p>
+              <p>£ {Math.trunc(price)}<span>/month</span></p>
               <p><span>(Monthly Vehicle Price inc. VAT)</span></p>
             </div>
             <a href="#">See more details</a>
