@@ -27,6 +27,7 @@ class App extends Component {
       carTypeValue: undefined,
       bodyType: {},
       bodyTypeValue: undefined,
+      userInput: '',
     }
   }
 
@@ -40,7 +41,7 @@ class App extends Component {
     })
     .then(response => response.json())
     .then((data) => {
-      console.log(data)
+      // console.log(data)
       this.setState({
         cars: data.data,
         totalCount: data.metadata.total_count,
@@ -52,10 +53,6 @@ class App extends Component {
         bodyType: data.metadata.aggregations.body_information,
       })
     })
-  }
-
-  getUserInput(event) {
-    return event.target.value
   }
 
   locationSearch = (event) => {
@@ -98,11 +95,14 @@ class App extends Component {
     })
   }
 
-  selectVehicleMake = (event) => {
-    const vehicleMakeValue = this.getUserInput(event);
+  getUserInput(event) {
+    return event.target.value
+  }
+
+  handleChange(event, vehicleMakeValue, transmissionValue, yearValue, fuelValue, bodyTypeValue) {
     event.preventDefault();
     fetch('https://app.joindrover.com/api/web/vehicles', {
-      body: JSON.stringify({vehicle_type: "Consumer", location: this.state.location, vehicle_make: vehicleMakeValue, transmission: this.state.transmissionValue, year: this.state.yearValue, fuel: this.state.fuelValue, body_type: this.state.bodyTypeValue}),
+      body: JSON.stringify({vehicle_type: "Consumer", location: this.state.location, vehicle_make: vehicleMakeValue, transmission: transmissionValue, year: yearValue, fuel: fuelValue, body_type: bodyTypeValue}),
       method: "POST",
       headers: {
         'content-type': 'application/json'
@@ -112,121 +112,125 @@ class App extends Component {
     .then((data) => {
       this.setState({
         cars: data.data,
+        vehicleMake: data.metadata.aggregations.vehicle_make,
         transmission: data.metadata.aggregations.transmission,
         year: data.metadata.aggregations.year,
         fuel: data.metadata.aggregations.fuel,
         carType: data.metadata.aggregations.tags,
         bodyType: data.metadata.aggregations.body_information,
         totalCount: data.metadata.total_count,
-        vehicleMakeValue
+        vehicleMakeValue,
+        yearValue,
+        fuelValue,
+        bodyTypeValue,
+        transmissionValue
       })
     })
   }
 
-  selectGearBox = (event) => {
-    event.preventDefault();
-    const transmissionValue = this.getUserInput(event);
-    fetch('https://app.joindrover.com/api/web/vehicles', {
-      body: JSON.stringify({vehicle_type: "Consumer", transmission: transmissionValue, location: this.state.location, vehicle_make: this.state.vehicleMakeValue, year: this.state.yearValue, fuel: this.state.fuelValue, body_type: this.state.bodyTypeValue }),
-      method: "POST",
-      headers: {
-        'content-type': 'application/json'
-      }
-    })
-    .then(response => response.json())
-    .then((data) => {
-      this.setState({
-        cars: data.data,
-        year: data.metadata.aggregations.year,
-        fuel: data.metadata.aggregations.fuel,
-        carType: data.metadata.aggregations.tags,
-        bodyType: data.metadata.aggregations.body_information,
-        totalCount: data.metadata.total_count,
-        vehicleMake: data.metadata.aggregations.vehicle_make,
-        transmissionValue,
-      })
-    })
-  }
+  // selectGearBox = (event) => {
+  //   event.preventDefault();
+  //   const transmissionValue = this.getUserInput(event);
+  //   fetch('https://app.joindrover.com/api/web/vehicles', {
+  //     body: JSON.stringify({vehicle_type: "Consumer", transmission: transmissionValue, location: this.state.location, vehicle_make: this.state.vehicleMakeValue, year: this.state.yearValue, fuel: this.state.fuelValue, body_type: this.state.bodyTypeValue }),
+  //     method: "POST",
+  //     headers: {
+  //       'content-type': 'application/json'
+  //     }
+  //   })
+  //   .then(response => response.json())
+  //   .then((data) => {
+  //     this.setState({
+  //       cars: data.data,
+  //       year: data.metadata.aggregations.year,
+  //       fuel: data.metadata.aggregations.fuel,
+  //       carType: data.metadata.aggregations.tags,
+  //       bodyType: data.metadata.aggregations.body_information,
+  //       totalCount: data.metadata.total_count,
+  //       vehicleMake: data.metadata.aggregations.vehicle_make,
+  //       transmissionValue,
+  //     })
+  //   })
+  // }
 
-  selectYear = (event) => {
-    event.preventDefault();
-    const yearValue = parseInt(this.getUserInput(event), 0);
-    fetch('https://app.joindrover.com/api/web/vehicles', {
-      body: JSON.stringify({vehicle_type: "Consumer", transmission: this.state.transmissionValue, location: this.state.location, vehicle_make: this.state.vehicleMakeValue, year: yearValue, fuel: this.state.fuelValue, body_type: this.state.bodyTypeValue}),
-      method: "POST",
-      headers: {
-        'content-type': 'application/json'
-      }
-    })
-    .then(response => response.json())
-    .then((data) => {
-      this.setState({
-        cars: data.data,
-        year: data.metadata.aggregations.year,
-        fuel: data.metadata.aggregations.fuel,
-        carType: data.metadata.aggregations.tags,
-        bodyType: data.metadata.aggregations.body_information,
-        totalCount: data.metadata.total_count,
-        transmission: data.metadata.aggregations.transmission,
-        vehicleMake: data.metadata.aggregations.vehicle_make,
-        yearValue
-      })
-    })
-  }
+  // selectYear = (event) => {
+  //   event.preventDefault();
+  //   const yearValue = parseInt(this.getUserInput(event), 0);
+  //   fetch('https://app.joindrover.com/api/web/vehicles', {
+  //     body: JSON.stringify({vehicle_type: "Consumer", transmission: this.state.transmissionValue, location: this.state.location, vehicle_make: this.state.vehicleMakeValue, year: yearValue, fuel: this.state.fuelValue, body_type: this.state.bodyTypeValue}),
+  //     method: "POST",
+  //     headers: {
+  //       'content-type': 'application/json'
+  //     }
+  //   })
+  //   .then(response => response.json())
+  //   .then((data) => {
+  //     this.setState({
+  //       cars: data.data,
+  //       year: data.metadata.aggregations.year,
+  //       fuel: data.metadata.aggregations.fuel,
+  //       carType: data.metadata.aggregations.tags,
+  //       bodyType: data.metadata.aggregations.body_information,
+  //       totalCount: data.metadata.total_count,
+  //       transmission: data.metadata.aggregations.transmission,
+  //       vehicleMake: data.metadata.aggregations.vehicle_make,
+  //       yearValue
+  //     })
+  //   })
+  // }
 
-  selectFuelType = (event) => {
-    event.preventDefault();
-    const fuelValue = this.getUserInput(event);
-    fetch('https://app.joindrover.com/api/web/vehicles', {
-      body: JSON.stringify({vehicle_type: "Consumer", transmission: this.state.transmissionValue, location: this.state.location, vehicle_make: this.state.vehicleMakeValue, year: this.state.yearValue, fuel: fuelValue, body_type: this.state.bodyTypeValue}),
-      method: "POST",
-      headers: {
-        'content-type': 'application/json'
-      }
-    })
-    .then(response => response.json())
-    .then((data) => {
-      console.log(data)
-      this.setState({
-        cars: data.data,
-        year: data.metadata.aggregations.year,
-        fuel: data.metadata.aggregations.fuel,
-        carType: data.metadata.aggregations.tags,
-        bodyType: data.metadata.aggregations.body_information,
-        totalCount: data.metadata.total_count,
-        transmission: data.metadata.aggregations.transmission,
-        vehicleMake: data.metadata.aggregations.vehicle_make,
-        fuelValue
-      })
-    })
-  }
+  // selectFuelType = (event) => {
+  //   event.preventDefault();
+  //   const fuelValue = this.getUserInput(event);
+  //   fetch('https://app.joindrover.com/api/web/vehicles', {
+  //     body: JSON.stringify({vehicle_type: "Consumer", transmission: this.state.transmissionValue, location: this.state.location, vehicle_make: this.state.vehicleMakeValue, year: this.state.yearValue, fuel: fuelValue, body_type: this.state.bodyTypeValue}),
+  //     method: "POST",
+  //     headers: {
+  //       'content-type': 'application/json'
+  //     }
+  //   })
+  //   .then(response => response.json())
+  //   .then((data) => {
+  //     this.setState({
+  //       cars: data.data,
+  //       year: data.metadata.aggregations.year,
+  //       fuel: data.metadata.aggregations.fuel,
+  //       carType: data.metadata.aggregations.tags,
+  //       bodyType: data.metadata.aggregations.body_information,
+  //       totalCount: data.metadata.total_count,
+  //       transmission: data.metadata.aggregations.transmission,
+  //       vehicleMake: data.metadata.aggregations.vehicle_make,
+  //       fuelValue
+  //     })
+  //   })
+  // }
 
-  selectBodyType = (event) => {
-    event.preventDefault();
-    const bodyTypeValue = this.getUserInput(event);
-    fetch('https://app.joindrover.com/api/web/vehicles', {
-      body: JSON.stringify({vehicle_type: "Consumer", transmission: this.state.transmissionValue, location: this.state.location, vehicle_make: this.state.vehicleMakeValue, year: this.state.yearValue, fuel: this.state.fuelValue, body_type: bodyTypeValue}),
-      method: "POST",
-      headers: {
-        'content-type': 'application/json'
-      }
-    })
-    .then(response => response.json())
-    .then((data) => {
-      console.log(data)
-      this.setState({
-        cars: data.data,
-        year: data.metadata.aggregations.year,
-        fuel: data.metadata.aggregations.fuel,
-        carType: data.metadata.aggregations.tags,
-        bodyType: data.metadata.aggregations.body_information,
-        totalCount: data.metadata.total_count,
-        transmission: data.metadata.aggregations.transmission,
-        vehicleMake: data.metadata.aggregations.vehicle_make,
-        bodyTypeValue
-      })
-    })
-  }
+  // selectBodyType = (event) => {
+  //   event.preventDefault();
+  //   const bodyTypeValue = this.getUserInput(event);
+  //   fetch('https://app.joindrover.com/api/web/vehicles', {
+  //     body: JSON.stringify({vehicle_type: "Consumer", transmission: this.state.transmissionValue, location: this.state.location, vehicle_make: this.state.vehicleMakeValue, year: this.state.yearValue, fuel: this.state.fuelValue, body_type: bodyTypeValue}),
+  //     method: "POST",
+  //     headers: {
+  //       'content-type': 'application/json'
+  //     }
+  //   })
+  //   .then(response => response.json())
+  //   .then((data) => {
+  //     console.log(data)
+  //     this.setState({
+  //       cars: data.data,
+  //       year: data.metadata.aggregations.year,
+  //       fuel: data.metadata.aggregations.fuel,
+  //       carType: data.metadata.aggregations.tags,
+  //       bodyType: data.metadata.aggregations.body_information,
+  //       totalCount: data.metadata.total_count,
+  //       transmission: data.metadata.aggregations.transmission,
+  //       vehicleMake: data.metadata.aggregations.vehicle_make,
+  //       bodyTypeValue
+  //     })
+  //   })
+  // }
 
   // selectCarType = (event) => {
   //   event.preventDefault();
@@ -279,12 +283,11 @@ class App extends Component {
             />
             <SearchForm
               locationSearch={this.locationSearch}
-              selectVehicleMake={this.selectVehicleMake}
-              selectGearBox={this.selectGearBox}
-              selectYear={this.selectYear}
-              selectFuelType={this.selectFuelType}
-              selectCarType={this.selectCarType}
-              selectBodyType={this.selectBodyType}
+              selectVehicleMake={(event) => this.handleChange(event, this.getUserInput(event), this.state.transmissionValue, this.state.yearValue, this.state.fuelValue, this.state.bodyTypeValue)}
+              selectGearBox={(event) => this.handleChange(event, this.state.vehicleMakeValue, this.getUserInput(event), this.state.yearValue, this.state.fuelValue, this.state.bodyTypeValue)}
+              selectYear={(event) => this.handleChange(event, this.state.vehicleMakeValue, this.state.transmissionValue, parseInt(this.getUserInput(event)), this.state.fuelValue, this.state.bodyTypeValue)}
+              selectFuelType={(event) => this.handleChange(event, this.state.vehicleMakeValue, this.state.transmissionValue, this.state.yearValue, this.getUserInput(event), this.state.bodyTypeValue)}
+              selectBodyType={(event) => this.handleChange(event, this.state.vehicleMakeValue, this.state.transmissionValue, this.state.yearValue, this.state.fuelValue, this.getUserInput(event))}
               vehicleMake={this.state.vehicleMake}
               vehicleMakeValue={this.state.vehicleMakeValue}
               transmissionValue={this.state.transmissionValue}
