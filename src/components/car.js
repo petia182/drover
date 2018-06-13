@@ -7,9 +7,10 @@ class Car extends React.Component {
 
   render() {
     const { vehicle_make, vehicle_model, postcode, year, body_information, fuel, transmission, color, images, available_start_date } = this.props.details;
-    const image = images[0].small_image_url;
+    const image = images[0].image_url;
     const features = this.props.details.features;
-    // console.log(features)
+    const price = this.props.details.price_discount_and_deposit_schedule_hash[1].subtotal_price_pounds;
+    console.log(images[0])
 
     return(
       <div className="single-car">
@@ -17,7 +18,7 @@ class Car extends React.Component {
           <div className="car-image" style={{ backgroundImage: `url(${image})`}}></div>
         </div>
         <div className="car-description">
-          <div>
+          <div className="title-wrap">
             <div className="title-wrapper">
               <h2>{vehicle_make}<span> {vehicle_model}</span></h2>
               <p className="located">Located in {postcode}</p>
@@ -36,6 +37,13 @@ class Car extends React.Component {
               return <li key={index}>{capitalize(feature.split('_').join(' '))}</li>
             })}
           </ul>
+          <div class="price">
+            <div>
+              <p>£ {price}<span>/month</span></p>
+              <p><span>(Monthly Vehicle Price inc. VAT)</span></p>
+            </div>
+            <a href="#">See more details</a>
+          </div>
         </div>
       </div>
     )

@@ -41,6 +41,7 @@ class App extends Component {
     })
     .then(response => response.json())
     .then((data) => {
+      console.log(data.data)
       this.setState({
         cars: data.data,
         totalCount: data.metadata.total_count,
@@ -65,7 +66,6 @@ class App extends Component {
     })
     .then(response => response.json())
     .then((data) => {
-      // console.log(data)
       if (data.data.length > 0) {
         this.setState({
           cars: data.data,
@@ -109,6 +109,7 @@ class App extends Component {
     })
     .then(response => response.json())
     .then((data) => {
+      // console.log(data.data)
       this.setState({
         cars: data.data,
         vehicleMake: data.metadata.aggregations.vehicle_make,
