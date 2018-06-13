@@ -1,4 +1,5 @@
 import React from 'react';
+import Moment from 'react-moment';
 
 import { capitalize } from './helper-functions';
 
@@ -21,7 +22,7 @@ class Car extends React.Component {
               <h2>{vehicle_make}<span> {vehicle_model}</span></h2>
               <p className="located">Located in {postcode}</p>
             </div>
-            <p className="availability">Available from {available_start_date}</p>
+            <p className="availability">Available from <Moment format="Do MMMM YYYY">{available_start_date}</Moment></p>
           </div>
           <ul className="car-specs">
             <li>{year}</li>
