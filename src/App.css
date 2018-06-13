@@ -72,12 +72,13 @@ input, select {
   box-shadow: none;
   background-color: white;
   border: 1px solid lightgrey;
-  border-radius: 0;
+  border-radius: 5px;
   cursor: pointer;
 }
 
 label {
   margin-bottom: 5px;
+  font-weight: bold;
 }
 
 .car-list {
@@ -100,6 +101,8 @@ h1 span {
   margin-bottom: 20px;
   background-color: white;
   border: 1px solid lightgrey;
+  border-radius: 5px;
+  overflow: hidden;
 }
 
 .single-car h2 {
@@ -146,7 +149,7 @@ p, li {
 .car-specs {
   border-top: 1px solid lightgrey;
   border-bottom: 1px solid lightgrey;
-  padding: 15px;
+  padding: 10px 15px;
   margin: 0;
   justify-content: space-between;
 }
@@ -159,13 +162,13 @@ p, li {
 .car-features {
   padding: 0 10px;
   flex-wrap: wrap;
+  margin: 10px 0;
 }
 
 .car-features li {
   padding: 0 .5rem 0.3rem 0.5rem;
-  /*padding-right: .5rem;*/
   color: #7d807c;
-  font-size: 13px;
+  font-size: 12px;
   position: relative;
   letter-spacing: 0.5px;
 }
@@ -195,11 +198,12 @@ p, li {
 }
 
 .price span {
-  font-size: 70%;
+  font-size: 65%;
   font-weight: normal;
 }
 
-.price a {
+.price button {
+  border: none;
   display: block;
   cursor: pointer;
   padding: 12px 15px;

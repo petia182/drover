@@ -41,7 +41,6 @@ class App extends Component {
     })
     .then(response => response.json())
     .then((data) => {
-      console.log(data.data)
       this.setState({
         cars: data.data,
         totalCount: data.metadata.total_count,

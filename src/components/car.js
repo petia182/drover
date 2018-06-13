@@ -10,7 +10,6 @@ class Car extends React.Component {
     const image = images[0].image_url;
     const features = this.props.details.features;
     const price = this.props.details.price_discount_and_deposit_schedule_hash[1].subtotal_price_pounds;
-    console.log(images[0])
 
     return(
       <div className="single-car">
@@ -37,12 +36,12 @@ class Car extends React.Component {
               return <li key={index}>{capitalize(feature.split('_').join(' '))}</li>
             })}
           </ul>
-          <div class="price">
+          <div className="price">
             <div>
               <p>£ {Math.trunc(price)}<span>/month</span></p>
               <p><span>(Monthly Vehicle Price inc. VAT)</span></p>
             </div>
-            <a href="#">See more details</a>
+            <button>See more details</button>
           </div>
         </div>
       </div>
