@@ -8,6 +8,7 @@
     "react-dom": "^16.4.0",
     "react-google-autocomplete": "^1.0.16",
     "react-moment": "^0.7.0",
+    "react-paginate": "^5.2.3",
     "react-scripts": "1.1.4"
   },
   "scripts": {
