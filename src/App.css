@@ -45,7 +45,7 @@
   display: flex;
   padding-top: 40px;
   max-width: 1300px;
-  padding-bottom: 20px;
+  padding-bottom: 50px;
 }
 
 .search, .car-list {
@@ -214,6 +214,43 @@ p, li {
   color: black;
   border-radius: 5px;
   margin-left: 20px;
+}
+
+.pagination-text {
+  text-align: center;
+  margin: 40px 0 20px 0;
+}
+
+.pagination {
+  display: flex;
+  padding-left: 0;
+  list-style: none;
+  border-radius: .25rem;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+
+.pagination li {
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.pagination li.active a {
+  background-color: #50ff7d;
+}
+
+.pagination a {
+  border: none;
+  padding: 10px;
+  text-align: center;
+  border-radius: 6px;
+  background: #ffffff;
+  outline: none;
+}
+
+.next a, .previous a {
+  background-color: #C2F9F8;
 }
 
 @keyframes App-logo-spin {
