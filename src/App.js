@@ -38,7 +38,6 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		// console.log(this.state.page);
 		fetch("https://app.joindrover.com/api/web/vehicles", {
 			body: JSON.stringify({
 				vehicle_type: "Consumer",
@@ -52,7 +51,6 @@ class App extends Component {
 		})
 			.then(response => response.json())
 			.then(data => {
-				// console.log(data.metadata);
 				this.setState({
 					cars: data.data,
 					totalCount: data.metadata.total_count,
@@ -67,10 +65,6 @@ class App extends Component {
 				});
 			});
 	}
-
-	// goToSelectedPage() {
-	//   console.log(this.state.cars);
-	// }
 
 	locationSearch = event => {
 		const locationInput = event.name;
@@ -123,13 +117,6 @@ class App extends Component {
 
 	getUserInput(event) {
 		return event.target.value;
-	}
-
-	pageSelected(e) {
-		console.log(e.selected + 1);
-		this.setState({
-			page: e.selected + 1
-		});
 	}
 
 	onPageChange(page) {
@@ -185,7 +172,6 @@ class App extends Component {
 		})
 			.then(response => response.json())
 			.then(data => {
-				// console.log(data.metadata);
 				this.setState({
 					cars: data.data,
 					vehicleMake: data.metadata.aggregations.vehicle_make,
@@ -211,8 +197,6 @@ class App extends Component {
 	}
 
 	render() {
-		// this.goToSelectedPage();
-		// this.getTotalPage();
 		return (
 			<div className="wrapper">
 				<Nav />
@@ -304,8 +288,8 @@ class App extends Component {
 						</div>
 						<ReactPaginate
 							pageCount={this.getTotalPage()}
-							// marginPagesDisplayed={2}
-							// pageRangeDisplayed={5}
+							marginPagesDisplayed={1}
+							pageRangeDisplayed={1}
 							containerClassName={"pagination"}
 							onPageChange={e => this.onPageChange(e.selected + 1)}
 							subContainerClassName={"pages pagination"}

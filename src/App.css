@@ -46,6 +46,8 @@
   padding-top: 40px;
   max-width: 1300px;
   padding-bottom: 50px;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .search, .car-list {
@@ -54,7 +56,7 @@
 
 .search {
   align-self: stretch;
-  width: 25%;
+  width: calc(25% - 30px);
   margin-top: 35px;
 }
 
@@ -83,7 +85,6 @@ label {
 
 .car-list {
   width: 75%;
-  margin-left: 20px;
 }
 
 h1 {
@@ -103,6 +104,7 @@ h1 span {
   border: 1px solid lightgrey;
   border-radius: 5px;
   overflow: hidden;
+  flex-wrap: wrap;
 }
 
 .single-car h2 {
@@ -135,6 +137,7 @@ h1 span {
   display: flex;
   align-items: center;
   padding: 0 15px;
+  flex-wrap: wrap;
 }
 
 p, li {
@@ -187,6 +190,7 @@ p, li {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  flex-wrap: wrap;
 }
 
 .price p {
@@ -251,6 +255,41 @@ p, li {
 
 .next a, .previous a {
   background-color: #C2F9F8;
+}
+
+@media only screen and (max-width: 950px) {
+  .search, .car-list{
+    width: 100%;
+  }
+
+  .car-results-title {
+    margin-top: 20px;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .car-image-wrapper, .car-description {
+    width: 100%;
+  }
+
+  .car-image-wrapper {
+    height: 400px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .price button {
+    width: 100%;
+    margin: 10px 0 0 0;
+  }
+
+  .price > div {
+    width: 100%;
+  }
+
+  .price p {
+    text-align: center;
+  }
 }
 
 @keyframes App-logo-spin {
