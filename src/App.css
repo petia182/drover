@@ -56,7 +56,7 @@ form {
   width: 100%;
   overflow: hidden; }
 
-input, select {
+.input, .select {
   margin-bottom: 20px;
   -webkit-appearance: none;
   padding: 10px;
