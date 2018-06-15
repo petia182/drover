@@ -10,7 +10,9 @@
 - Add google autocomplete to the location in the search filter
 - Fully responsive
 
-#### Run the project:
+### Run the project:
+
+#### Install dependencies
 
 ```
 $ npm install
@@ -22,7 +24,7 @@ or
 $ yarn
 ```
 
-#### Run the project:
+#### Start development server:
 
 ```
 $ npm start
