@@ -13,5 +13,17 @@
 #### Run the project:
 
 ```
-npm start
+$ npm install
+```
+
+or
+
+```
+$ yarn
+```
+
+#### Run the project:
+
+```
+$ npm start
 ```
