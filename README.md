@@ -10,6 +10,10 @@
 - Add google autocomplete to the location in the search filter
 - Fully responsive
 
+### Live app:
+
+https://drover.netlify.com
+
 ### Run the project:
 
 #### Install dependencies
