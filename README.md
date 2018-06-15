@@ -24,7 +24,7 @@ or
 $ yarn
 ```
 
-#### Start development server:
+#### Start the development server:
 
 ```
 $ npm start
