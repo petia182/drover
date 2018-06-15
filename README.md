@@ -9,6 +9,7 @@
 - Add functionality for pagination
 - Add google autocomplete to the location in the search filter
 - Fully responsive
+- Styling as close as possible to the live site https://www.joindrover.com/cars/search
 
 ### Live app:
 
