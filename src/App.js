@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import Autocomplete from "react-google-autocomplete";
-
-// import Pagination from './components/pagination';
 import ReactPaginate from "react-paginate";
 
 import Car from "./components/car";
@@ -94,7 +92,6 @@ class App extends Component {
 		})
 			.then(response => response.json())
 			.then(data => {
-				console.log(data);
 				this.setState({
 					cars: data.data,
 					page: page
@@ -131,7 +128,6 @@ class App extends Component {
 		})
 			.then(response => response.json())
 			.then(data => {
-				console.log(data);
 				this.setState({
 					cars: data.data,
 					vehicleMake: data.metadata.aggregations.vehicle_make,
