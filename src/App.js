@@ -15,7 +15,7 @@ class App extends Component {
     this.inputRef = React.createRef();
     this.state = {
       cars: [],
-      vehicle_type: 'PCO',
+      vehicle_type: 'Consumer',
       perPage: 0,
       totalCount: 0,
       currentPage: 0,
@@ -162,7 +162,7 @@ class App extends Component {
         <Nav />
         <div className="container">
           <div className="search">
-            <form action="">
+            <form className="search-form" action="">
               <label htmlFor="location-input">Location</label>
               <Autocomplete
                 className="input"
@@ -259,56 +259,60 @@ class App extends Component {
           </div>
           <div className="car-list">
             <div className="car-results-title">
-              <div>
-                <p>Choose your subscription type:</p>
-                <form action="">
-                  <label htmlFor="">
-                    Monthly Rolling Subscription (cancel or swap monthly)
-                  </label>
-                  <input
-                    onChange={event =>
-                      this.handleChange(
-                        event,
-                        this.state.location,
-                        this.state.vehicleMakeValue,
-                        this.state.transmissionValue,
-                        this.state.yearValue,
-                        this.state.fuelValue,
-                        this.state.bodyTypeValue,
-                        this.state.page,
-                        'Consumer',
-                      )
-                    }
-                    type="radio"
-                    name="tabs"
-                  />
-                  <label htmlFor="">
-                    Minimum Commitment Subscription (get discounts!)
-                  </label>
-                  <input
-                    onChange={event =>
-                      this.handleChange(
-                        event,
-                        this.state.location,
-                        this.state.vehicleMakeValue,
-                        this.state.transmissionValue,
-                        this.state.yearValue,
-                        this.state.fuelValue,
-                        this.state.bodyTypeValue,
-                        this.state.page,
-                        'PCO',
-                      )
-                    }
-                    type="radio"
-                    name="tabs"
-                  />
-                </form>
-              </div>
               <h1>
                 {this.state.totalCount}{' '}
                 {this.state.totalCount === 1 ? 'vehicle' : 'vehicles'} found
                 near <span>{this.state.location}.</span>
               </h1>
+              <div className="subscription">
+                <p>Choose your subscription type:</p>
+                <form action="">
+                  <div>
+                    <input
+                      onChange={event =>
+                        this.handleChange(
+                          event,
+                          this.state.location,
+                          this.state.vehicleMakeValue,
+                          this.state.transmissionValue,
+                          this.state.yearValue,
+                          this.state.fuelValue,
+                          this.state.bodyTypeValue,
+                          this.state.page,
+                          'Consumer',
+                        )
+                      }
+                      type="radio"
+                      name="tabs"
+                    />
+                    <label htmlFor="">
+                      Monthly Rolling Subscription (cancel or swap monthly)
+                    </label>
+                  </div>
+                  <div>
+                    <input
+                      onChange={event =>
+                        this.handleChange(
+                          event,
+                          this.state.location,
+                          this.state.vehicleMakeValue,
+                          this.state.transmissionValue,
+                          this.state.yearValue,
+                          this.state.fuelValue,
+                          this.state.bodyTypeValue,
+                          this.state.page,
+                          'PCO',
+                        )
+                      }
+                      type="radio"
+                      name="tabs"
+                    />
+                    <label htmlFor="">
+                      Minimum Commitment Subscription (get discounts!)
+                    </label>
+                  </div>
+                </form>
+              </div>
             </div>
             {Object.keys(this.state.cars).map(key => (
               <Car key={key} details={this.state.cars[key]} />

@@ -48,14 +48,44 @@ $lightblue: #C2F9F8;
   width: 87%;
   margin: 0 auto;
   display: flex;
-  padding-top: 40px;
+  padding-top: 20px;
   max-width: 1300px;
   padding-bottom: 50px;
   flex-wrap: wrap;
   justify-content: space-between;
 }
 
-.search, .car-list {
+.subscription {
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  border: 1px solid lightgrey;
+
+  form {
+    display: flex;
+    flex-wrap: wrap;
+
+    div {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+
+  label {
+    margin-left: 10px;
+    font-size: 15px;
+    font-weight: normal;
+  }
+
+  > p {
+    font-weight: bold;
+    margin-top: 0;
+  }
+}
+
+.search,
+.car-list {
   height: 100%;
 }
 
@@ -65,14 +95,15 @@ $lightblue: #C2F9F8;
   margin-top: 35px;
 }
 
-form {
+.search-form {
   display: flex;
   flex-direction: column;
   width: 100%;
   overflow: hidden;
 }
 
-input, select {
+.input,
+.select {
   margin-bottom: 20px;
   -webkit-appearance: none;
   padding: 10px;

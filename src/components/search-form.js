@@ -13,9 +13,7 @@ class SearchForm extends React.Component {
       <React.Fragment>
         <label>{title}</label>
         <select className="select" onChange={selectOption}>
-          <option disabled={true} selected={true}>
-            {placeholder}
-          </option>
+          <option value={placeholder}>{placeholder}</option>
           {Object.keys(optionSelected).map((car, index) => (
             <option key={index} value={car}>
               {capitalize(car)} ({optionSelected[car]})

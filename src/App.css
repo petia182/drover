@@ -36,13 +36,34 @@
   width: 87%;
   margin: 0 auto;
   display: flex;
-  padding-top: 40px;
+  padding-top: 20px;
   max-width: 1300px;
   padding-bottom: 50px;
   flex-wrap: wrap;
   justify-content: space-between; }
 
-.search, .car-list {
+.subscription {
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  border: 1px solid lightgrey; }
+  .subscription form {
+    display: flex;
+    flex-wrap: wrap; }
+    .subscription form div {
+      width: 100%;
+      margin-bottom: 10px; }
+  .subscription label {
+    margin-left: 10px;
+    font-size: 15px;
+    font-weight: normal; }
+  .subscription > p {
+    font-weight: bold;
+    margin-top: 0; }
+
+.search,
+.car-list {
   height: 100%; }
 
 .search {
@@ -50,13 +71,14 @@
   width: calc(25% - 30px);
   margin-top: 35px; }
 
-form {
+.search-form {
   display: flex;
   flex-direction: column;
   width: 100%;
   overflow: hidden; }
 
-.input, .select {
+.input,
+.select {
   margin-bottom: 20px;
   -webkit-appearance: none;
   padding: 10px;
