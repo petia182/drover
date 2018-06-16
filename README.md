@@ -23,12 +23,6 @@ https://drover.netlify.com
 $ npm install
 ```
 
-or
-
-```
-$ yarn
-```
-
 #### Start the development server:
 
 ```
